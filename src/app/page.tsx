@@ -1,5 +1,5 @@
-import {InfoButtons} from '../components/InfoButtons';
+import {HeroSection} from '../components/HeroSection';
 
 export default function Home() {
-    return <InfoButtons />;
+    return <HeroSection />;
 }
