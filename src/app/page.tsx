@@ -3,11 +3,13 @@
 import {useState} from 'react';
 import {HeroSection} from '../components/HeroSection';
 import {WelcomeScreen} from '../components/WelcomeScreen';
+import {TaskScreen} from '../components/TaskScreen';
 
 type Screen = 'hero' | 'welcome' | 'game';
 
 export default function Home() {
     const [currentScreen, setCurrentScreen] = useState<Screen>('hero');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [playerName, setPlayerName] = useState('');
 
     const handleStart = () => {
@@ -16,7 +18,7 @@ export default function Home() {
 
     const handleContinue = (name: string) => {
         setPlayerName(name);
-        setCurrentScreen('game'); // следующий экран
+        setCurrentScreen('game');
     };
 
     if (currentScreen === 'welcome') {
@@ -24,7 +26,22 @@ export default function Home() {
     }
 
     if (currentScreen === 'game') {
-        return <div>Привет, {playerName}!</div>; // тут имя уже используется
+        return (
+            <TaskScreen
+                onSkip={() => {
+                    /* логика пропуска */
+                }}
+                onStart={() => {
+                    /* переход к задаче */
+                }}
+                onRules={() => {
+                    /* открыть правила */
+                }}
+                onClose={() => {
+                    /* закрыть/вернуться назад */
+                }}
+            />
+        );
     }
 
     return <HeroSection onStart={handleStart} />;

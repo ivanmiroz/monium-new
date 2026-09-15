@@ -8,12 +8,12 @@ body,
     margin: 0;
 }
 
-body.g-root {
+.g-root {
     --g-color-base-background: #e9ecf5;
     overflow: hidden;
 }
 
-:root {
+body.g-root {
     --g-button-background-color: #000000;
     --g-button-background-color-hover: #1a1a1a;
     --g-button-border-radius: 20px;
@@ -30,8 +30,27 @@ body.g-root {
 }
 
 .button {
-    margin-top: 56px;
-    width: fit-content;
+    &--margin-top {
+        margin-top: 56px;
+    }
+
+    &--less-padding {
+        --g-button-padding: 37px;
+    }
+
+    &--gray {
+        --g-button-background-color: var(--g-color-base-generic-light);
+        --g-button-background-color-hover: var(--g-color-base-generic-light);
+
+        --g-button-text-color: var(--g-color-text-primary);
+        --g-button-text-color-hover: var(--g-color-text-primary);
+    }
+
+    &--square {
+        height: 68px;
+        --g-button-padding: 0;
+        width: 68px;
+    }
 }
 
 .screen-title {

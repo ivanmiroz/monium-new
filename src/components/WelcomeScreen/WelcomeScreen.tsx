@@ -34,7 +34,11 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({onContinue}) => {
                         size="xl"
                     />
 
-                    <Button className="button" type="submit" disabled={!name.trim()}>
+                    <Button
+                        className="button button--less-padding button--margin-top"
+                        type="submit"
+                        disabled={!name.trim()}
+                    >
                         Продолжить
                     </Button>
                 </form>

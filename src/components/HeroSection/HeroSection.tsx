@@ -44,7 +44,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({onStart}) => {
                         «Monium»
                     </p>
 
-                    <Button className="button" view="action" size="xl" onClick={onStart}>
+                    <Button
+                        className="button button--margin-top"
+                        view="action"
+                        size="xl"
+                        onClick={onStart}
+                    >
                         Начать
                     </Button>
                 </Col>

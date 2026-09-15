@@ -6,10 +6,11 @@ $gridBreakpoints: (
     'xxl': 1248px,
 );
 
-:root {
+.g-root {
     // Базовые цвета фона и текста
     --g-color-base-white: #ffffff;
     --g-color-text-primary: #000000;
+    --g-color-base-generic-light: rgba(0, 0, 0, 0.05);
     --g-font-family-sans: var(--font-ys-text), sans-serif;
 
     --g-text-size-xs: 18px;
