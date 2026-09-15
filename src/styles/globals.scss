@@ -38,6 +38,10 @@ body.g-root {
         --g-button-padding: 37px;
     }
 
+    &--medium {
+        width: 340px;
+    }
+
     &--gray {
         --g-button-background-color: var(--g-color-base-generic-light);
         --g-button-background-color-hover: var(--g-color-base-generic-light);

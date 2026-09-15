@@ -5,8 +5,9 @@ import {HeroSection} from '../components/HeroSection';
 import {WelcomeScreen} from '../components/WelcomeScreen';
 import {TaskScreen} from '../components/TaskScreen';
 import {RulesScreen} from '../components/RulesScreen';
+import {ConfirmExitScreen} from '../components/ConfirmExitScreen';
 
-type Screen = 'hero' | 'welcome' | 'game' | 'rules';
+type Screen = 'hero' | 'welcome' | 'game' | 'rules' | 'confirm-exit';
 
 export default function Home() {
     const [currentScreen, setCurrentScreen] = useState<Screen>('hero');
@@ -27,10 +28,14 @@ export default function Home() {
     }
 
     if (currentScreen === 'rules') {
+        return <RulesScreen onBack={() => setCurrentScreen('game')} />;
+    }
+
+    if (currentScreen === 'confirm-exit') {
         return (
-            <RulesScreen
-                onBack={() => setCurrentScreen('game')}
-                onClose={() => setCurrentScreen('game')}
+            <ConfirmExitScreen
+                onStay={() => setCurrentScreen('game')}
+                onExit={() => setCurrentScreen('hero')}
             />
         );
     }
@@ -39,7 +44,7 @@ export default function Home() {
         return (
             <TaskScreen
                 onRules={() => setCurrentScreen('rules')}
-                onClose={() => setCurrentScreen('game')}
+                onClose={() => setCurrentScreen('confirm-exit')}
                 onSkip={() => {
                     /* логика пропуска */
                 }}
