@@ -26,6 +26,7 @@ interface TaskScreenProps {
 
 const TIMER_TOTAL_SECONDS = 5 * 60; // 05:00 — общая длительность
 const TIMER_START_SECONDS = TIMER_TOTAL_SECONDS - 1; // 04:59 — стартовое отображение
+const TIMER_DANGER_THRESHOLD = 59; // 00:59 и менее — красный
 
 const formatTime = (totalSeconds: number): string => {
     const safe = Math.max(0, totalSeconds);
@@ -44,6 +45,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
 }) => {
     const [isTimerRunning, setIsTimerRunning] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isTimeUp, setIsTimeUp] = useState(false);
     const [secondsLeft, setSecondsLeft] = useState(TIMER_START_SECONDS);
     const [isUnlocked, setIsUnlocked] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -98,6 +100,8 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
             setSecondsLeft((prev) => {
                 if (prev <= 1) {
                     stopTimer();
+                    setIsTimeUp(true);
+                    setIsSubmitted(true);
                     return 0;
                 }
                 return prev - 1;
@@ -119,6 +123,8 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
     const handleSkipClick = () => {
         onSkipRequest?.(getElapsedTime());
     };
+
+    const isTimerDanger = secondsLeft <= TIMER_DANGER_THRESHOLD;
 
     return (
         <div className="task-screen">
@@ -153,7 +159,11 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                     <div className="task-screen__body-left">
                         {isSubmitted ? (
                             <>
-                                <h5 className="task-screen__title">{task.title} завершена!</h5>
+                                <h5 className="task-screen__title">
+                                    {isTimeUp
+                                        ? 'Время для задачи вышло!'
+                                        : `${task.title} завершена!`}
+                                </h5>
                                 <p className="task-screen__text task-screen__text--submitted">
                                     Поднимите руку — стендист проверит решение
                                 </p>
@@ -176,7 +186,13 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                                 </div>
 
                                 {isTimerRunning ? (
-                                    <div className="task-screen__timer">
+                                    <div
+                                        className={
+                                            isTimerDanger
+                                                ? 'task-screen__timer task-screen__timer--danger'
+                                                : 'task-screen__timer'
+                                        }
+                                    >
                                         {formatTime(secondsLeft)}
                                     </div>
                                 ) : (
