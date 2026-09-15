@@ -3,14 +3,13 @@
 import React from 'react';
 import {Theme, ThemeProvider} from '@gravity-ui/uikit';
 
-import {DEFAULT_THEME} from '../Wrapper';
-
 interface AppProps {
     children: React.ReactNode;
 }
 
 export const App: React.FC<AppProps> = ({children}) => {
-    const [theme] = React.useState<Theme>(DEFAULT_THEME);
+    // Задаем тему напрямую, без зависимости от Wrapper
+    const [theme] = React.useState<Theme>('light');
 
     return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

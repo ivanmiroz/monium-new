@@ -10,7 +10,11 @@ import KVMonium from '../../assets/icons/kv_monium.svg';
 
 import './HeroSection.scss';
 
-export const HeroSection = () => {
+interface HeroSectionProps {
+    onStart: () => void;
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({onStart}) => {
     return (
         <div className="hero-section">
             {/* Логотип слева вверху */}
@@ -19,7 +23,7 @@ export const HeroSection = () => {
             </div>
 
             {/* Основной контент по центру вертикально */}
-            <Row className="hero-section__content" align="center">
+            <Row className="hero-section__content" space={0}>
                 {/* Левый блок */}
                 <Col s="12" l="6" className="hero-section__left">
                     {/* Блок времени и задач */}
@@ -40,7 +44,7 @@ export const HeroSection = () => {
                         «Monium»
                     </p>
 
-                    <Button className="hero-section__button" view="action" size="xl">
+                    <Button className="button" view="action" size="xl" onClick={onStart}>
                         Начать
                     </Button>
                 </Col>

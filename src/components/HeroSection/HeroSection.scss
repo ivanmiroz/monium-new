@@ -1,20 +1,21 @@
 .hero-section {
-    min-height: calc(100vh - 80px); // Компенсируем padding: 40px у body
-    position: relative;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    padding: 40px;
+    position: relative;
 
     &__logo {
+        left: 40px;
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 40px;
         z-index: 10;
     }
 
     &__content {
-        flex: 1;
-        display: flex;
         align-items: center;
+        display: flex;
+        flex: 1;
     }
 
     &__left {
@@ -23,44 +24,38 @@
     }
 
     &__right {
+        align-items: center;
         display: flex;
         justify-content: flex-end;
-        align-items: center;
         padding-right: 25px;
     }
 
     &__title {
-        margin: 30px 0 0;
         font-family: var(--font-ys-display), sans-serif;
-        font-size: 130px;
+        font-size: var(--g-text-size-4xl);
         font-weight: 900;
         line-height: 1;
+        margin: 30px 0 0;
     }
 
     &__description {
-        margin: 30px 0 0;
-        font-size: 18px;
+        font-size: var(--g-text-size-lg);
         line-height: 1.5;
-        max-width: 480px;
-    }
-
-    &__button {
-        margin-top: 56px;
-        width: fit-content;
+        margin: 30px 0 0;
     }
 }
 
 .stats-block {
-    background: rgba(255, 255, 255, 1);
-    padding: 16px 24px;
+    align-items: center;
+    background: var(--g-color-base-white);
     border-radius: 20px;
     display: flex;
-    align-items: center;
+    padding: 16px 24px;
     width: fit-content;
 
     &__item {
-        display: flex;
         align-items: center;
+        display: flex;
 
         &_tasks {
             margin-left: 20px;
@@ -68,7 +63,7 @@
     }
 
     &__text {
+        font-size: var(--g-text-size-base);
         margin-left: 8px;
-        font-size: 16px;
     }
 }

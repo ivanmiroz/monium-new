@@ -6,26 +6,17 @@ $gridBreakpoints: (
     'xxl': 1248px,
 );
 
-.g-root {
+:root {
     // Базовые цвета фона и текста
-    --g-color-base-background: #e9ecf5;
+    --g-color-base-white: #ffffff;
     --g-color-text-primary: #000000;
     --g-font-family-sans: var(--font-ys-text), sans-serif;
-}
 
-.g-button {
-    // Переопределяем CSS-переменные для всех кнопок
-    --g-button-background-color: #000000;
-    --g-button-background-color-hover: #1a1a1a;
-
-    --g-button-border-radius: 20px;
-
-    --g-button-font-size: 20px;
-
-    --g-button-height: 68px;
-
-    --g-button-padding: 82px;
-
-    --g-button-text-color: #ffffff;
-    --g-button-text-color-hover: #ffffff;
+    --g-text-size-xs: 18px;
+    --g-text-size-base: 20px;
+    --g-text-size-sm: 22px;
+    --g-text-size-md: 24px;
+    --g-text-size-lg: 28px;
+    --g-text-size-2xl: 48px;
+    --g-text-size-4xl: 130px;
 }

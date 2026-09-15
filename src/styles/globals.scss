@@ -8,8 +8,53 @@ body,
     margin: 0;
 }
 
-body {
-    background-color: var(--g-color-base-background);
+body.g-root {
+    --g-color-base-background: #e9ecf5;
     overflow: hidden;
-    padding: 40px; // Отступ 40px со всех сторон
+}
+
+:root {
+    --g-button-background-color: #000000;
+    --g-button-background-color-hover: #1a1a1a;
+    --g-button-border-radius: 20px;
+    --g-button-font-size: 20px;
+    --g-button-height: 68px;
+    --g-button-padding: 82px;
+    --g-button-text-color: var(--g-color-base-white);
+    --g-button-text-color-hover: var(--g-color-base-white);
+
+    --g-text-input-background-color: var(--g-color-base-white);
+    --g-text-input-border-radius: 28px;
+    --g-text-input-text-color: var(--g-color-text-primary);
+    --g-text-input-placeholder-color: rgb(from var(--g-color-text-primary) r g b / 0.5);
+}
+
+.button {
+    margin-top: 56px;
+    width: fit-content;
+}
+
+.screen-title {
+    font-family: var(--font-ys-display), sans-serif;
+    font-size: var(--g-text-size-2xl);
+    font-weight: 800;
+    line-height: 1;
+    margin: 0;
+}
+
+.g-text-input_size_xl {
+    margin-top: 56px;
+
+    .g-text-input__content {
+        border: none;
+
+        .g-text-input__control {
+            font-family: var(--font-ys-display), sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            height: 128px;
+            padding: 28px 33px;
+            width: 1132px;
+        }
+    }
 }

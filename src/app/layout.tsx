@@ -1,6 +1,5 @@
 import type {Metadata} from 'next';
 import localFont from 'next/font/local';
-import {DEFAULT_BODY_CLASSNAME} from '../components/Wrapper';
 import {App} from '../components/App';
 
 import '@gravity-ui/uikit/styles/fonts.css';
@@ -32,9 +31,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
-        // Применяем обе переменные шрифтов
         <html lang="ru" className={`${ysDisplay.variable} ${ysText.variable}`}>
-            <body className={DEFAULT_BODY_CLASSNAME}>
+            {/* Используем стандартный класс g-root для Gravity UI */}
+            <body className="g-root">
                 <App>{children}</App>
             </body>
         </html>

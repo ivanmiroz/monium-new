@@ -1,0 +1,25 @@
+.welcome-screen {
+    align-items: center;
+    background-image: url('/imgs/bg.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+
+    &__content {
+        text-align: center;
+    }
+
+    &__description {
+        font-size: var(--g-text-size-lg);
+        line-height: 1.5;
+        margin: 16px 0 0;
+    }
+
+    &__form {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+}
