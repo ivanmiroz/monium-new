@@ -48,12 +48,21 @@ body.g-root {
 
         --g-button-text-color: var(--g-color-text-primary);
         --g-button-text-color-hover: var(--g-color-text-primary);
+
+        &.g-button_disabled {
+            --g-button-background-color: #e2e6ef;
+            --g-button-text-color: #8b8d92;
+        }
     }
 
     &--square {
         height: 68px;
         --g-button-padding: 0;
         width: 68px;
+    }
+
+    &:not(.button--gray).g-button_disabled {
+        --g-button-background-color: #8b8d92;
     }
 }
 

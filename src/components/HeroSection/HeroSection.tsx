@@ -15,6 +15,11 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({onStart}) => {
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onStart();
+    };
+
     return (
         <div className="hero-section">
             {/* Логотип слева вверху */}
@@ -44,14 +49,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({onStart}) => {
                         «Monium»
                     </p>
 
-                    <Button
-                        className="button button--margin-top"
-                        view="action"
-                        size="xl"
-                        onClick={onStart}
-                    >
-                        Начать
-                    </Button>
+                    <form className="hero-section__form" onSubmit={handleSubmit}>
+                        <Button
+                            className="button button--margin-top"
+                            view="action"
+                            size="xl"
+                            type="submit"
+                        >
+                            Начать
+                        </Button>
+                    </form>
                 </Col>
 
                 {/* Правый блок */}

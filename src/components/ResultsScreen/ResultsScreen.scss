@@ -1,0 +1,126 @@
+.results-screen {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 40px;
+
+    &__header {
+        display: flex;
+        flex-shrink: 0;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+
+    &__wrapper {
+        align-items: stretch;
+        display: flex;
+        gap: 19px;
+        justify-content: center;
+        margin: auto 0; /* ← центрирует обёртку по вертикали, но без растягивания */
+    }
+
+    &__left,
+    &__right {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        padding: 38px;
+        width: 565px;
+    }
+
+    &__left {
+        background: rgba(255, 255, 255, 1);
+        border-radius: 36px;
+    }
+
+    &__right {
+        background: rgba(59, 211, 95, 1);
+        border-radius: 36px;
+        text-align: center;
+    }
+
+    &__logo {
+        align-self: center;
+    }
+
+    &__thanks {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    &__thanks-title {
+        font-family: var(--font-ys-display), sans-serif;
+        font-size: 36px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    &__thanks-text {
+        font-size: 20px;
+        line-height: 1.5;
+        margin: 23px 0 0;
+    }
+
+    &__tasks {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__task {
+        align-items: center;
+        background: rgba(231, 235, 244, 1);
+        border-radius: 22px;
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 24px;
+
+        svg {
+            flex-shrink: 0;
+        }
+    }
+
+    &__task-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__task-title {
+        font-family: var(--font-ys-display), sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 1.1;
+        margin: 0;
+    }
+
+    &__task-time {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 16px;
+        line-height: 1.4;
+        margin: 4px 0 0;
+    }
+
+    &__right-title {
+        font-family: var(--font-ys-display), sans-serif;
+        font-size: 36px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    &__right-text {
+        font-size: 20px;
+        line-height: 1.5;
+        margin: 16px 0 0;
+    }
+
+    &__qr {
+        align-self: center;
+        margin-top: 65px;
+    }
+}
