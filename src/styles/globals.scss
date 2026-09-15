@@ -6,6 +6,7 @@ body,
     height: 100%;
     min-width: 320px;
     margin: 0;
+    overflow: hidden;
 }
 
 .g-root {
@@ -88,5 +89,23 @@ body.g-root {
             padding: 28px 33px;
             width: 1132px;
         }
+    }
+}
+
+.app-scaler {
+    align-items: center;
+    background: var(--g-color-base-background, #e9ecf5);
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    overflow: hidden;
+    width: 100vw;
+
+    &__inner {
+        flex-shrink: 0;
+        height: 1080px;
+        position: relative;
+        transform-origin: center center;
+        width: 1920px;
     }
 }
