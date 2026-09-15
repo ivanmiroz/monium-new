@@ -4,8 +4,9 @@ import {useState} from 'react';
 import {HeroSection} from '../components/HeroSection';
 import {WelcomeScreen} from '../components/WelcomeScreen';
 import {TaskScreen} from '../components/TaskScreen';
+import {RulesScreen} from '../components/RulesScreen';
 
-type Screen = 'hero' | 'welcome' | 'game';
+type Screen = 'hero' | 'welcome' | 'game' | 'rules';
 
 export default function Home() {
     const [currentScreen, setCurrentScreen] = useState<Screen>('hero');
@@ -25,20 +26,25 @@ export default function Home() {
         return <WelcomeScreen onContinue={handleContinue} />;
     }
 
+    if (currentScreen === 'rules') {
+        return (
+            <RulesScreen
+                onBack={() => setCurrentScreen('game')}
+                onClose={() => setCurrentScreen('game')}
+            />
+        );
+    }
+
     if (currentScreen === 'game') {
         return (
             <TaskScreen
+                onRules={() => setCurrentScreen('rules')}
+                onClose={() => setCurrentScreen('game')}
                 onSkip={() => {
                     /* логика пропуска */
                 }}
                 onStart={() => {
                     /* переход к задаче */
-                }}
-                onRules={() => {
-                    /* открыть правила */
-                }}
-                onClose={() => {
-                    /* закрыть/вернуться назад */
                 }}
             />
         );

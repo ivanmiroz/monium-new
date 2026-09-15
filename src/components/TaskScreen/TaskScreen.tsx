@@ -20,9 +20,11 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({onRules, onClose, onSkip,
     return (
         <div className="task-screen">
             <div className="task-screen__header">
-                <Button className="button button--gray button--less-padding" onClick={onRules}>
-                    Правила
-                </Button>
+                <div className="task-screen__header-left">
+                    <Button className="button button--gray button--less-padding" onClick={onRules}>
+                        Правила
+                    </Button>
+                </div>
 
                 <div className="task-screen__title-block">
                     <h4 className="screen-title">Root Cause Challenge</h4>
@@ -32,13 +34,15 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({onRules, onClose, onSkip,
                     </p>
                 </div>
 
-                <Button
-                    className="button button--gray button--square"
-                    onClick={onClose}
-                    aria-label="Закрыть"
-                >
-                    <Icon data={CloseIcon} width={15} height={15} />
-                </Button>
+                <div className="task-screen__header-right">
+                    <Button
+                        className="button button--gray button--square"
+                        onClick={onClose}
+                        aria-label="Закрыть"
+                    >
+                        <Icon data={CloseIcon} width={15} height={15} />
+                    </Button>
+                </div>
             </div>
 
             <div className="task-screen__content">
