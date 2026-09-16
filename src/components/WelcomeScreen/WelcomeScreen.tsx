@@ -30,7 +30,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({onContinue}) => {
                         className="welcome-screen__input"
                         value={name}
                         onUpdate={setName}
-                        placeholder="Введите имя"
+                        placeholder="| Иван Иванов"
                         size="xl"
                     />
 

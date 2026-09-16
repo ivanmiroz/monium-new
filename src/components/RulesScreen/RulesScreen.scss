@@ -22,7 +22,6 @@
 
     &__content {
         display: flex;
-        flex: 1;
         flex-direction: column;
         margin-top: 40px;
         min-height: 0;
@@ -66,9 +65,16 @@
     }
 
     &__text {
-        font-size: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 24px 0 0;
+    }
+
+    &__text-item {
+        font-size: 20px;
         line-height: 1.5;
-        margin: 40px 0 0;
+        margin: 16px 0 0;
     }
 
     &__video {

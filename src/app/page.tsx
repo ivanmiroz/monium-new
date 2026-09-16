@@ -7,6 +7,7 @@ import {TaskData, TaskScreen} from '../components/TaskScreen';
 import {RulesScreen} from '../components/RulesScreen';
 import {ConfirmExitScreen} from '../components/ConfirmExitScreen';
 import {ResultsScreen, TaskResult} from '../components/ResultsScreen';
+import {pickRandomTasks} from '../data/tasks';
 import {useFitScale} from '../hooks/useFitScale';
 
 type Screen =
@@ -19,23 +20,12 @@ type Screen =
     | 'results'
     | 'confirm-exit-results';
 
-const TASKS: TaskData[] = [
-    {
-        title: 'Задача 1',
-        situation:
-            'Главврач заметил провал в количестве завершенных приемов на прошлой неделе (график ушел на дно в среду) и просит вас объясниться.',
-        task: 'Создайте Блокноте и Выведите график метрики RPS (запросов в секунду) по эндпоинту /api/orders (можно переиспользовать запрос из SLO). Сравните график текущей недели с графиком прошлой недели. Добавьте текстовое объяснение "почему"',
-    },
-    {
-        title: 'Задача 2',
-        situation: 'Здесь будет текст ситуации для второй задачи.',
-        task: 'Здесь будет текст задания для второй задачи.',
-    },
-];
+const TASKS_PER_GAME = 2;
 
 export default function Home() {
     const [currentScreen, setCurrentScreen] = useState<Screen>('hero');
     const [playerName, setPlayerName] = useState('');
+    const [tasks, setTasks] = useState<TaskData[]>([]);
     const [taskIndex, setTaskIndex] = useState(0);
     const [results, setResults] = useState<TaskResult[]>([]);
     const [pendingSkipTime, setPendingSkipTime] = useState('00:00');
@@ -46,6 +36,7 @@ export default function Home() {
         setTaskIndex(0);
         setResults([]);
         setPendingSkipTime('00:00');
+        setTasks([]);
     };
 
     const handleStart = () => {
@@ -54,13 +45,16 @@ export default function Home() {
 
     const handleContinue = (name: string) => {
         setPlayerName(name);
-        resetGame();
+        setTasks(pickRandomTasks(TASKS_PER_GAME));
+        setTaskIndex(0);
+        setResults([]);
+        setPendingSkipTime('00:00');
         setCurrentScreen('game');
     };
 
     const finishOrNext = (nextResults: TaskResult[]) => {
         setResults(nextResults);
-        if (nextResults.length >= TASKS.length) {
+        if (nextResults.length >= tasks.length) {
             setCurrentScreen('results');
         } else {
             setTaskIndex((prev) => prev + 1);
@@ -114,11 +108,15 @@ export default function Home() {
             currentScreen === 'confirm-exit' ||
             currentScreen === 'confirm-skip'
         ) {
+            if (!tasks[taskIndex]) {
+                return null;
+            }
+
             return (
                 <>
                     <TaskScreen
                         key={taskIndex}
-                        task={TASKS[taskIndex]}
+                        task={{...tasks[taskIndex], title: `Задача ${taskIndex + 1}`}}
                         onRules={() => setCurrentScreen('rules')}
                         onClose={() => setCurrentScreen('confirm-exit')}
                         onStart={() => {

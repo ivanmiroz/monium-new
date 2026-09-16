@@ -10,7 +10,7 @@ body,
 }
 
 .g-root {
-    --g-color-base-background: #e9ecf5;
+    --g-color-base-background: rgba(231, 235, 244, 1);
     overflow: hidden;
 }
 
@@ -27,7 +27,7 @@ body.g-root {
     --g-text-input-background-color: var(--g-color-base-white);
     --g-text-input-border-radius: 28px;
     --g-text-input-text-color: var(--g-color-text-primary);
-    --g-text-input-placeholder-color: rgb(from var(--g-color-text-primary) r g b / 0.5);
+    --g-text-input-placeholder-color: rgba(208, 215, 232, 1);
 }
 
 .button {

@@ -55,7 +55,7 @@
         align-items: flex-start;
         display: flex;
         flex-direction: column;
-        max-width: 620px;
+        max-width: 720px;
         min-width: 0;
         padding: 64px 0 56px 80px;
     }
@@ -88,11 +88,11 @@
     &__text {
         font-size: 18px;
         line-height: 1.5;
-        margin: 16px 0 0;
+        margin: 10px 0 0;
     }
 
     &__text--submitted {
-        margin-top: 40px;
+        margin-top: 12px;
     }
 
     &__hint {
