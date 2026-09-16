@@ -1,15 +1,15 @@
 .results-screen {
     box-sizing: border-box;
     display: flex;
-    flex-direction: column;
     height: 100%;
     padding: 40px;
+    position: relative;
 
     &__header {
-        display: flex;
-        flex-shrink: 0;
-        justify-content: flex-end;
-        margin-bottom: 20px;
+        position: absolute;
+        right: 40px;
+        top: 40px;
+        z-index: 10;
     }
 
     &__wrapper {
@@ -17,7 +17,7 @@
         display: flex;
         gap: 19px;
         justify-content: center;
-        margin: auto 0; /* ← центрирует обёртку по вертикали, но без растягивания */
+        margin: auto;
     }
 
     &__left,

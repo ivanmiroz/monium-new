@@ -116,7 +116,10 @@ export default function Home() {
                 <>
                     <TaskScreen
                         key={taskIndex}
-                        task={{...tasks[taskIndex], title: `Задача ${taskIndex + 1}`}}
+                        task={{
+                            ...tasks[taskIndex],
+                            title: `Задача ${taskIndex + 1}`,
+                        }}
                         onRules={() => setCurrentScreen('rules')}
                         onClose={() => setCurrentScreen('confirm-exit')}
                         onStart={() => {
@@ -156,7 +159,9 @@ export default function Home() {
     return (
         <div className="app-scaler">
             <div className="app-scaler__inner" style={{transform: `scale(${scale})`}}>
-                {renderScreen()}
+                <div key={currentScreen} className="screen-fade">
+                    {renderScreen()}
+                </div>
             </div>
         </div>
     );

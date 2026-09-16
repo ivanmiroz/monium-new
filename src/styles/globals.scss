@@ -109,3 +109,25 @@ body.g-root {
         width: 1920px;
     }
 }
+
+.screen-fade {
+    /* stylelint-disable-next-line declaration-no-important */
+    animation: screenFadeIn 300ms ease-out !important;
+    height: 100%;
+    width: 100%;
+}
+
+@keyframes screenFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .screen-fade {
+        animation: none;
+    }
+}
