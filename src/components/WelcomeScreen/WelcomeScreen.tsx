@@ -27,10 +27,11 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({onContinue}) => {
 
                 <form onSubmit={handleSubmit} className="welcome-screen__form">
                     <TextInput
+                        autoFocus
                         className="welcome-screen__input"
                         value={name}
                         onUpdate={setName}
-                        placeholder="| Иван Иванов"
+                        placeholder="Иван Иванов"
                         size="xl"
                     />
 

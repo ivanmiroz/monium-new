@@ -31,21 +31,23 @@ export const RulesScreen: React.FC<RulesScreenProps> = ({onBack}) => {
                             Вы — дежурный инженер клиники «Лапки»
                         </h5>
 
-                        <div className="rules-screen__text">
-                            <p className="rules-screen__text-item">
-                                1. Работайте в Monium в соседней вкладке
-                            </p>
-                            <p className="rules-screen__text-item">
-                                2. Не закрывайте эту вкладку — здесь таймер
-                            </p>
-                            <p className="rules-screen__text-item">
-                                3. Будьте в наушниках на протяжении всего квиза
-                            </p>
-                        </div>
+                        <p className="rules-screen__text">
+                            1. Работайте в Monium в соседней вкладке
+                            <br />
+                            2. Не закрывайте эту вкладку — здесь таймер
+                            <br />
+                            3. Будьте в наушниках на протяжении всего квиза
+                        </p>
                     </div>
 
                     <div className="rules-screen__body-right">
-                        <video className="rules-screen__video" src="/video/rules.mp4" controls />
+                        <video
+                            className="rules-screen__video"
+                            src="/media/video.mp4"
+                            autoPlay
+                            controls
+                            playsInline
+                        />
                         <p className="rules-screen__video-caption">
                             4. Будьте в наушниках на протяжении всего квиза
                         </p>

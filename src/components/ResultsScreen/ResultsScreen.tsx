@@ -72,9 +72,9 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({playerName, results
                                 </div>
 
                                 {result.status === 'correct' ? (
-                                    <Icon data={YesIcon} width={61} height={61} />
+                                    <Icon data={YesIcon} width={56} height={56} />
                                 ) : (
-                                    <Icon data={NoIcon} width={61} height={61} />
+                                    <Icon data={NoIcon} width={53} height={53} />
                                 )}
                             </div>
                         ))}
