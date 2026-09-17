@@ -45,8 +45,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({onStart}) => {
 
                     <h1 className="hero-section__title">Root&nbsp;Cause Challenge</h1>
                     <p className="hero-section__description">
-                        Найди причину инцидента за 5 минут с помощью Observability-платформы
-                        «Monium»
+                        Найди причину инцидента за 5 минут с помощью
+                        <br /> Observability-платформы «Monium»
                     </p>
 
                     <form className="hero-section__form" onSubmit={handleSubmit}>

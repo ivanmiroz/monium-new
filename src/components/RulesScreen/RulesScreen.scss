@@ -52,7 +52,6 @@
         flex-direction: column;
         flex-shrink: 0;
         margin: 26px 20px 26px auto;
-        min-width: 1052px;
         padding: 20px;
     }
 
@@ -78,10 +77,10 @@
     }
 
     &__video {
-        border-radius: 12px;
+        border-radius: 18px;
         display: block;
         height: 529px;
-        width: 100%;
+        width: 915px;
     }
 
     &__video-caption {
