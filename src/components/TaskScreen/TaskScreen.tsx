@@ -175,6 +175,148 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
     const isTimerDanger = secondsLeft <= TIMER_DANGER_THRESHOLD;
     const TaskImage = task.image;
 
+    const renderBody = () => {
+        if (isSubmitted && isTimeUp) {
+            return (
+                <>
+                    <h5 className="task-screen__title">Время вышло</h5>
+                    <p className="task-screen__text task-screen__text--submitted">
+                        Переходите к следующей задаче и постарайтесь найти
+                        <br /> решение за отведённое время
+                    </p>
+
+                    <div className="task-screen__timer task-screen__timer--danger">
+                        {formatTime(0)}
+                    </div>
+                </>
+            );
+        }
+
+        if (isSubmitted) {
+            return (
+                <>
+                    <h5 className="task-screen__title">Отличная работа</h5>
+                    <p className="task-screen__text task-screen__text--submitted">
+                        Поднимите руку — стендист проверит
+                        <br /> правильность решения
+                    </p>
+
+                    <div className="task-screen__elapsed">
+                        <span className="task-screen__elapsed-label">Сделали за:</span>
+                        <div className="task-screen__timer task-screen__timer--elapsed">
+                            {getElapsedTime()}
+                        </div>
+                    </div>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <h5 className="task-screen__title">{task.title}</h5>
+
+                <h6 className="task-screen__subtitle">Ситуация</h6>
+                <p className="task-screen__text">{task.situation}</p>
+
+                <h6 className="task-screen__subtitle">Задача</h6>
+                <p className="task-screen__text">{task.task}</p>
+
+                <div
+                    className={
+                        isTimerRunning
+                            ? 'task-screen__hint task-screen__hint--running'
+                            : 'task-screen__hint'
+                    }
+                >
+                    <Icon data={ExIcon} size={20} />
+                    <span className="task-screen__hint-text">
+                        {isTimerRunning ? (
+                            <>
+                                Переходите во вторую вкладку и приступайте к задаче. Когда найдёте
+                                <br />
+                                решение, вернитесь в интерактив и нажмите «Сдать решение».
+                                <br />
+                                Если не успеете решить задачу за 5 минут, — решение не
+                                засчитывается.
+                            </>
+                        ) : (
+                            'Работайте в Monium на соседней вкладке'
+                        )}
+                    </span>
+                </div>
+
+                {isTimerRunning ? (
+                    <div
+                        className={
+                            isTimerDanger
+                                ? 'task-screen__timer task-screen__timer--danger'
+                                : 'task-screen__timer'
+                        }
+                    >
+                        {formatTime(secondsLeft)}
+                    </div>
+                ) : (
+                    <p className="task-screen__note">
+                        Когда ознакомитесь с задачей, нажмите «Начать
+                        <br /> задачу» — запустится таймер.
+                    </p>
+                )}
+            </>
+        );
+    };
+
+    const renderFooter = () => {
+        if (isSubmitted && isTimeUp) {
+            return (
+                <Button className="button button--less-padding" onClick={() => handleResult(false)}>
+                    К следующей задаче
+                </Button>
+            );
+        }
+
+        if (isSubmitted) {
+            return (
+                <>
+                    <Button
+                        className="button button--less-padding button--gray"
+                        onClick={() => handleResult(false)}
+                        disabled={!isUnlocked}
+                    >
+                        Неправильно
+                    </Button>
+                    <Button
+                        className="button button--less-padding"
+                        onClick={() => handleResult(true)}
+                        disabled={!isUnlocked}
+                    >
+                        Правильно
+                    </Button>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <Button
+                    className="button button--less-padding button--gray"
+                    onClick={handleSkipClick}
+                >
+                    Пропустить
+                </Button>
+
+                {isTimerRunning ? (
+                    <Button className="button button--less-padding" onClick={handleSubmit}>
+                        Сдать решение
+                    </Button>
+                ) : (
+                    <Button className="button button--less-padding" onClick={handleStart}>
+                        Начать задачу
+                    </Button>
+                )}
+            </>
+        );
+    };
+
     return (
         <div className="task-screen">
             <div className="task-screen__header">
@@ -205,153 +347,14 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
 
             <div className="task-screen__content">
                 <div className="task-screen__body">
-                    <div className="task-screen__body-left">
-                        {isSubmitted ? (
-                            isTimeUp ? (
-                                <>
-                                    <h5 className="task-screen__title">Время вышло</h5>
-                                    <p className="task-screen__text task-screen__text--submitted">
-                                        Переходите к следующей задаче и постарайтесь найти
-                                        <br /> решение за отведённое время
-                                    </p>
-
-                                    <div className="task-screen__timer task-screen__timer--danger">
-                                        {formatTime(0)}
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <h5 className="task-screen__title">Отличная работа</h5>
-                                    <p className="task-screen__text task-screen__text--submitted">
-                                        Поднимите руку — стендист проверит
-                                        <br /> правильность решения
-                                    </p>
-
-                                    <div className="task-screen__elapsed">
-                                        <span className="task-screen__elapsed-label">
-                                            Сделали за:
-                                        </span>
-                                        <div className="task-screen__timer task-screen__timer--elapsed">
-                                            {getElapsedTime()}
-                                        </div>
-                                    </div>
-                                </>
-                            )
-                        ) : (
-                            <>
-                                <h5 className="task-screen__title">{task.title}</h5>
-
-                                <h6 className="task-screen__subtitle">Ситуация</h6>
-                                <p className="task-screen__text">{task.situation}</p>
-
-                                <h6 className="task-screen__subtitle">Задача</h6>
-                                <p className="task-screen__text">{task.task}</p>
-
-                                <div
-                                    className={
-                                        isTimerRunning
-                                            ? 'task-screen__hint task-screen__hint--running'
-                                            : 'task-screen__hint'
-                                    }
-                                >
-                                    <Icon data={ExIcon} size={20} />
-                                    <span className="task-screen__hint-text">
-                                        {isTimerRunning ? (
-                                            <>
-                                                Переходите во вторую вкладку и приступайте к задаче.
-                                                Когда найдёте
-                                                <br />
-                                                решение, вернитесь в интерактив и нажмите «Сдать
-                                                решение».
-                                                <br />
-                                                Если не успеете решить задачу за 5 минут, — решение
-                                                не засчитывается.
-                                            </>
-                                        ) : (
-                                            'Работайте в Monium на соседней вкладке'
-                                        )}
-                                    </span>
-                                </div>
-
-                                {isTimerRunning ? (
-                                    <div
-                                        className={
-                                            isTimerDanger
-                                                ? 'task-screen__timer task-screen__timer--danger'
-                                                : 'task-screen__timer'
-                                        }
-                                    >
-                                        {formatTime(secondsLeft)}
-                                    </div>
-                                ) : (
-                                    <p className="task-screen__note">
-                                        Когда ознакомитесь с задачей, нажмите «Начать
-                                        <br /> задачу» — запустится таймер.
-                                    </p>
-                                )}
-                            </>
-                        )}
-                    </div>
+                    <div className="task-screen__body-left">{renderBody()}</div>
 
                     <div className="task-screen__body-right">
                         <TaskImage />
                     </div>
                 </div>
 
-                <div className="task-screen__footer">
-                    {isSubmitted ? (
-                        isTimeUp ? (
-                            <Button
-                                className="button button--less-padding"
-                                onClick={() => handleResult(false)}
-                            >
-                                К следующей задаче
-                            </Button>
-                        ) : (
-                            <>
-                                <Button
-                                    className="button button--less-padding button--gray"
-                                    onClick={() => handleResult(false)}
-                                    disabled={!isUnlocked}
-                                >
-                                    Неправильно
-                                </Button>
-                                <Button
-                                    className="button button--less-padding"
-                                    onClick={() => handleResult(true)}
-                                    disabled={!isUnlocked}
-                                >
-                                    Правильно
-                                </Button>
-                            </>
-                        )
-                    ) : (
-                        <>
-                            <Button
-                                className="button button--less-padding button--gray"
-                                onClick={handleSkipClick}
-                            >
-                                Пропустить
-                            </Button>
-
-                            {isTimerRunning ? (
-                                <Button
-                                    className="button button--less-padding"
-                                    onClick={handleSubmit}
-                                >
-                                    Сдать решение
-                                </Button>
-                            ) : (
-                                <Button
-                                    className="button button--less-padding"
-                                    onClick={handleStart}
-                                >
-                                    Начать задачу
-                                </Button>
-                            )}
-                        </>
-                    )}
-                </div>
+                <div className="task-screen__footer">{renderFooter()}</div>
             </div>
         </div>
     );
