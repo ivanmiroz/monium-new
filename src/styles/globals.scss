@@ -117,6 +117,13 @@ body.g-root {
     width: 100%;
 }
 
+.screen-overlay {
+    background: var(--g-color-base-background, #e9ecf5);
+    inset: 0;
+    position: absolute;
+    z-index: 10;
+}
+
 @keyframes screenFadeIn {
     from {
         opacity: 0;

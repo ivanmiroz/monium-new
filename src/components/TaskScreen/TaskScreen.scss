@@ -55,9 +55,10 @@
         align-items: flex-start;
         display: flex;
         flex-direction: column;
-        max-width: 620px;
+        flex-shrink: 0;
         min-width: 0;
         padding: 64px 0 56px 80px;
+        width: 691px;
     }
 
     &__body-right {
@@ -82,7 +83,7 @@
         font-size: 24px;
         font-weight: 800;
         line-height: 1.1;
-        margin: 40px 0 0;
+        margin: 24px 0 0;
     }
 
     &__text {
@@ -102,8 +103,16 @@
         display: flex;
         gap: 25px;
         margin-top: 32px;
-        padding: 19px 24px;
+        padding: 21px 24px;
         width: fit-content;
+
+        &--running {
+            align-items: flex-start;
+
+            .task-screen__hint-text {
+                font-size: 18px;
+            }
+        }
     }
 
     &__hint-text {
@@ -122,6 +131,23 @@
         &--danger {
             color: rgba(250, 92, 94, 1);
         }
+
+        &--elapsed {
+            margin: 0;
+            padding-top: 8px;
+        }
+    }
+
+    &__elapsed {
+        display: flex;
+        flex-direction: column;
+        margin: auto 0 0;
+        padding-top: 48px;
+    }
+
+    &__elapsed-label {
+        font-size: 20px;
+        line-height: 1.3;
     }
 
     &__note {

@@ -88,4 +88,10 @@
         line-height: 1.5;
         margin: 20px 0 0;
     }
+
+    &__footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+    }
 }

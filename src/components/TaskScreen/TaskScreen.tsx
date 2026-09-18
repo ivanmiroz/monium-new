@@ -86,7 +86,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
 
     // Разблокировка кнопок по Shift после submit
     useEffect(() => {
-        if (!isSubmitted || isUnlocked) {
+        if (!isSubmitted || isUnlocked || isTimeUp) {
             return () => {};
         }
 
@@ -101,7 +101,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isSubmitted, isUnlocked]);
+    }, [isSubmitted, isUnlocked, isTimeUp]);
 
     const stopTimer = () => {
         if (intervalRef.current) {
@@ -187,8 +187,8 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                 <div className="task-screen__title-block">
                     <h4 className="screen-title">Root Cause Challenge</h4>
                     <p className="task-screen__description">
-                        Найди причину инцидента за 5 минут с помощью
-                        <br /> Observability-платформы «Monium»
+                        Найдите причину инцидента за 5 минут с помощью
+                        <br /> observability-платформы Yandex Monium
                     </p>
                 </div>
 
@@ -207,16 +207,36 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                 <div className="task-screen__body">
                     <div className="task-screen__body-left">
                         {isSubmitted ? (
-                            <>
-                                <h5 className="task-screen__title">
-                                    {isTimeUp
-                                        ? 'Время для задачи вышло!'
-                                        : `${task.title} завершена!`}
-                                </h5>
-                                <p className="task-screen__text task-screen__text--submitted">
-                                    Поднимите руку — стендист проверит решение
-                                </p>
-                            </>
+                            isTimeUp ? (
+                                <>
+                                    <h5 className="task-screen__title">Время вышло</h5>
+                                    <p className="task-screen__text task-screen__text--submitted">
+                                        Переходите к следующей задаче и постарайтесь найти
+                                        <br /> решение за отведённое время
+                                    </p>
+
+                                    <div className="task-screen__timer task-screen__timer--danger">
+                                        {formatTime(0)}
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <h5 className="task-screen__title">Отличная работа</h5>
+                                    <p className="task-screen__text task-screen__text--submitted">
+                                        Поднимите руку — стендист проверит
+                                        <br /> правильность решения
+                                    </p>
+
+                                    <div className="task-screen__elapsed">
+                                        <span className="task-screen__elapsed-label">
+                                            Сделали за:
+                                        </span>
+                                        <div className="task-screen__timer task-screen__timer--elapsed">
+                                            {getElapsedTime()}
+                                        </div>
+                                    </div>
+                                </>
+                            )
                         ) : (
                             <>
                                 <h5 className="task-screen__title">{task.title}</h5>
@@ -224,13 +244,32 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                                 <h6 className="task-screen__subtitle">Ситуация</h6>
                                 <p className="task-screen__text">{task.situation}</p>
 
-                                <h6 className="task-screen__subtitle">Задание</h6>
+                                <h6 className="task-screen__subtitle">Задача</h6>
                                 <p className="task-screen__text">{task.task}</p>
 
-                                <div className="task-screen__hint">
-                                    <Icon data={ExIcon} width={32} height={32} />
+                                <div
+                                    className={
+                                        isTimerRunning
+                                            ? 'task-screen__hint task-screen__hint--running'
+                                            : 'task-screen__hint'
+                                    }
+                                >
+                                    <Icon data={ExIcon} size={20} />
                                     <span className="task-screen__hint-text">
-                                        Работайте в Monium на соседней вкладке
+                                        {isTimerRunning ? (
+                                            <>
+                                                Переходите во вторую вкладку и приступайте к задаче.
+                                                Когда найдёте
+                                                <br />
+                                                решение, вернитесь в интерактив и нажмите «Сдать
+                                                решение».
+                                                <br />
+                                                Если не успеете решить задачу за 5 минут, — решение
+                                                не засчитывается.
+                                            </>
+                                        ) : (
+                                            'Работайте в Monium на соседней вкладке'
+                                        )}
                                     </span>
                                 </div>
 
@@ -246,8 +285,8 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                                     </div>
                                 ) : (
                                     <p className="task-screen__note">
-                                        На этой странице запустится таймер,
-                                        <br /> а в новой вкладке откроется нужная задача
+                                        Когда ознакомитесь с задачей, нажмите «Начать
+                                        <br /> задачу» — запустится таймер.
                                     </p>
                                 )}
                             </>
@@ -261,22 +300,31 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
 
                 <div className="task-screen__footer">
                     {isSubmitted ? (
-                        <>
-                            <Button
-                                className="button button--less-padding button--gray"
-                                onClick={() => handleResult(false)}
-                                disabled={!isUnlocked}
-                            >
-                                Неправильно
-                            </Button>
+                        isTimeUp ? (
                             <Button
                                 className="button button--less-padding"
-                                onClick={() => handleResult(true)}
-                                disabled={!isUnlocked}
+                                onClick={() => handleResult(false)}
                             >
-                                Правильно
+                                К следующей задаче
                             </Button>
-                        </>
+                        ) : (
+                            <>
+                                <Button
+                                    className="button button--less-padding button--gray"
+                                    onClick={() => handleResult(false)}
+                                    disabled={!isUnlocked}
+                                >
+                                    Неправильно
+                                </Button>
+                                <Button
+                                    className="button button--less-padding"
+                                    onClick={() => handleResult(true)}
+                                    disabled={!isUnlocked}
+                                >
+                                    Правильно
+                                </Button>
+                            </>
+                        )
                     ) : (
                         <>
                             <Button
@@ -291,7 +339,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                                     className="button button--less-padding"
                                     onClick={handleSubmit}
                                 >
-                                    Остановить таймер и вызвать проверку
+                                    Сдать решение
                                 </Button>
                             ) : (
                                 <Button

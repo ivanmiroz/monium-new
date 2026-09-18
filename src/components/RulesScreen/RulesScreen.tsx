@@ -6,17 +6,24 @@ import {Button} from '@gravity-ui/uikit';
 import './RulesScreen.scss';
 
 interface RulesScreenProps {
+    showBack?: boolean;
     onBack?: () => void;
+    onContinue: () => void;
 }
 
-export const RulesScreen: React.FC<RulesScreenProps> = ({onBack}) => {
+export const RulesScreen: React.FC<RulesScreenProps> = ({showBack = false, onBack, onContinue}) => {
     return (
         <div className="rules-screen">
             <div className="rules-screen__header">
                 <div className="rules-screen__header-left">
-                    <Button className="button button--gray button--less-padding" onClick={onBack}>
-                        Вернуться к задаче
-                    </Button>
+                    {showBack && (
+                        <Button
+                            className="button button--gray button--less-padding"
+                            onClick={onBack}
+                        >
+                            Вернуться к задаче
+                        </Button>
+                    )}
                 </div>
 
                 <h4 className="screen-title rules-screen__header-title">Правила и вводные</h4>
@@ -48,7 +55,6 @@ export const RulesScreen: React.FC<RulesScreenProps> = ({onBack}) => {
                         <video
                             className="rules-screen__video"
                             src="/media/video.mp4"
-                            autoPlay
                             controls
                             playsInline
                         />
@@ -57,6 +63,14 @@ export const RulesScreen: React.FC<RulesScreenProps> = ({onBack}) => {
                         </p>
                     </div>
                 </div>
+
+                {!showBack && (
+                    <div className="rules-screen__footer">
+                        <Button className="button button--less-padding" onClick={onContinue}>
+                            Продолжить
+                        </Button>
+                    </div>
+                )}
             </div>
         </div>
     );

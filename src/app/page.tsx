@@ -18,7 +18,8 @@ type Screen =
     | 'confirm-exit'
     | 'confirm-skip'
     | 'results'
-    | 'confirm-exit-results';
+    | 'confirm-exit-results'
+    | 'confirm-restart';
 
 const TASKS_PER_GAME = 2;
 
@@ -29,6 +30,7 @@ export default function Home() {
     const [taskIndex, setTaskIndex] = useState(0);
     const [results, setResults] = useState<TaskResult[]>([]);
     const [pendingSkipTime, setPendingSkipTime] = useState('00:00');
+    const [rulesFromTask, setRulesFromTask] = useState(false);
 
     const scale = useFitScale();
 
@@ -37,6 +39,7 @@ export default function Home() {
         setResults([]);
         setPendingSkipTime('00:00');
         setTasks([]);
+        setRulesFromTask(false);
     };
 
     const handleStart = () => {
@@ -49,7 +52,8 @@ export default function Home() {
         setTaskIndex(0);
         setResults([]);
         setPendingSkipTime('00:00');
-        setCurrentScreen('game');
+        setRulesFromTask(false);
+        setCurrentScreen('rules');
     };
 
     const finishOrNext = (nextResults: TaskResult[]) => {
@@ -75,13 +79,26 @@ export default function Home() {
         setCurrentScreen('hero');
     };
 
+    const isGameFlow =
+        currentScreen === 'game' ||
+        currentScreen === 'confirm-exit' ||
+        currentScreen === 'confirm-skip' ||
+        (currentScreen === 'rules' && rulesFromTask);
+
+    const screenKey = isGameFlow ? `game-${taskIndex}` : currentScreen;
+
     const renderScreen = () => {
         if (currentScreen === 'welcome') {
-            return <WelcomeScreen onContinue={handleContinue} />;
+            return (
+                <WelcomeScreen
+                    onContinue={handleContinue}
+                    onBack={() => setCurrentScreen('hero')}
+                />
+            );
         }
 
-        if (currentScreen === 'rules') {
-            return <RulesScreen onBack={() => setCurrentScreen('game')} />;
+        if (currentScreen === 'rules' && !rulesFromTask) {
+            return <RulesScreen onContinue={() => setCurrentScreen('game')} />;
         }
 
         if (currentScreen === 'results') {
@@ -90,6 +107,7 @@ export default function Home() {
                     playerName={playerName}
                     results={results}
                     onClose={() => setCurrentScreen('confirm-exit-results')}
+                    onRestart={() => setCurrentScreen('confirm-restart')}
                 />
             );
         }
@@ -103,11 +121,20 @@ export default function Home() {
             );
         }
 
-        if (
-            currentScreen === 'game' ||
-            currentScreen === 'confirm-exit' ||
-            currentScreen === 'confirm-skip'
-        ) {
+        if (currentScreen === 'confirm-restart') {
+            return (
+                <ConfirmExitScreen
+                    title="Пройти ещё раз?"
+                    text="Текущий прогресс будет утерян"
+                    stayLabel="Остаться"
+                    actionLabel="Начать заново"
+                    onStay={() => setCurrentScreen('results')}
+                    onAction={exitToHero}
+                />
+            );
+        }
+
+        if (isGameFlow) {
             if (!tasks[taskIndex]) {
                 return null;
             }
@@ -120,7 +147,10 @@ export default function Home() {
                             ...tasks[taskIndex],
                             title: `Задача ${taskIndex + 1}`,
                         }}
-                        onRules={() => setCurrentScreen('rules')}
+                        onRules={() => {
+                            setRulesFromTask(true);
+                            setCurrentScreen('rules');
+                        }}
                         onClose={() => setCurrentScreen('confirm-exit')}
                         onStart={() => {
                             /* открыть задачу в новой вкладке */
@@ -131,6 +161,16 @@ export default function Home() {
                         }}
                         onComplete={handleTaskComplete}
                     />
+
+                    {currentScreen === 'rules' && rulesFromTask && (
+                        <div className="screen-overlay">
+                            <RulesScreen
+                                showBack
+                                onBack={() => setCurrentScreen('game')}
+                                onContinue={() => setCurrentScreen('game')}
+                            />
+                        </div>
+                    )}
 
                     {currentScreen === 'confirm-exit' && (
                         <ConfirmExitScreen
@@ -159,7 +199,7 @@ export default function Home() {
     return (
         <div className="app-scaler">
             <div className="app-scaler__inner" style={{transform: `scale(${scale})`}}>
-                <div key={currentScreen} className="screen-fade">
+                <div key={screenKey} className="screen-fade">
                     {renderScreen()}
                 </div>
             </div>

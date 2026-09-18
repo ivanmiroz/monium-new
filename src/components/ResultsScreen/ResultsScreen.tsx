@@ -20,28 +20,30 @@ interface ResultsScreenProps {
     playerName: string;
     results: TaskResult[];
     onClose?: () => void;
+    onRestart?: () => void;
 }
 
-const getThanksText = (correctCount: number): string => {
-    if (correctCount === 0) {
-        return 'Кажется, наши материалы вам точно пригодятся';
-    }
-    if (correctCount === 1) {
-        return 'Вы справились с половиной! Материалы помогут разобраться и со второй задачей';
-    }
-    return 'Вы справились со всеми задачами! Заберите материалы для новых вызовов';
-};
-
-export const ResultsScreen: React.FC<ResultsScreenProps> = ({playerName, results, onClose}) => {
-    const correctCount = results.filter((r) => r.status === 'correct').length;
-
+export const ResultsScreen: React.FC<ResultsScreenProps> = ({
+    playerName,
+    results,
+    onClose,
+    onRestart,
+}) => {
     return (
         <div className="results-screen">
             <div className="results-screen__header">
                 <Button
+                    className="button button--gray button--less-padding"
+                    onClick={onRestart}
+                    type="button"
+                >
+                    Пройти ещё раз
+                </Button>
+                <Button
                     className="button button--gray button--square"
                     onClick={onClose}
                     aria-label="Закрыть"
+                    type="button"
                 >
                     <Icon data={CloseIcon} width={15} height={15} />
                 </Button>
@@ -58,8 +60,9 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({playerName, results
                             Спасибо за участие,
                             <br /> {playerName}!
                         </h6>
-                        <p className="results-screen__thanks-text">{getThanksText(correctCount)}</p>
                     </div>
+
+                    <p className="results-screen__tasks-title">Ваши результаты:</p>
 
                     <div className="results-screen__tasks">
                         {results.map((result, index) => (
@@ -72,9 +75,9 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({playerName, results
                                 </div>
 
                                 {result.status === 'correct' ? (
-                                    <Icon data={YesIcon} width={56} height={56} />
+                                    <Icon data={YesIcon} width={61} height={61} />
                                 ) : (
-                                    <Icon data={NoIcon} width={53} height={53} />
+                                    <Icon data={NoIcon} width={61} height={61} />
                                 )}
                             </div>
                         ))}
@@ -82,15 +85,12 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({playerName, results
                 </div>
 
                 <div className="results-screen__right">
+                    <div className="results-screen__right-badge">После Scale</div>
+
                     <h6 className="results-screen__right-title">
-                        Хочешь получить
-                        <br /> материалы, консультацию
-                        <br /> или промокод?
+                        Хотите получить специальный офер, демо продукта или полезные материалы?
                     </h6>
-                    <p className="results-screen__right-text">
-                        Сканируй QR-код и мы вышлем
-                        <br /> вам материалы
-                    </p>
+                    <p className="results-screen__right-text">Сканируйте QR-код</p>
                     <div className="results-screen__qr">
                         <Icon data={QrIcon} size={473} />
                     </div>
