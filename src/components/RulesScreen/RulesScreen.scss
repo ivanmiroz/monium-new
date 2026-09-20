@@ -63,6 +63,12 @@
         margin: 0;
     }
 
+    &__text-intro {
+        font-size: 20px;
+        line-height: 1.5;
+        margin: 0;
+    }
+
     &__text {
         display: flex;
         flex-direction: column;
@@ -73,7 +79,23 @@
     &__text-item {
         font-size: 20px;
         line-height: 1.5;
-        margin: 16px 0 0;
+        margin: 0;
+    }
+
+    &__hint {
+        align-items: center;
+        background: rgba(231, 235, 244, 1);
+        border-radius: 20px;
+        display: flex;
+        gap: 25px;
+        margin-top: 32px;
+        padding: 21px 24px;
+        width: fit-content;
+    }
+
+    &__hint-text {
+        font-size: 20px;
+        line-height: 1.3;
     }
 
     &__video {

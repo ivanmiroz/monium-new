@@ -17,6 +17,7 @@ export interface TaskData {
 
 interface TaskScreenProps {
     task: TaskData;
+    isLastTask?: boolean;
     onRules?: () => void;
     onClose?: () => void;
     onStart?: () => void;
@@ -24,10 +25,10 @@ interface TaskScreenProps {
     onComplete?: (isCorrect: boolean, time: string) => void;
 }
 
-const TIMER_TOTAL_SECONDS = 5 * 60; // 05:00 — общая длительность
-const TIMER_START_SECONDS = TIMER_TOTAL_SECONDS - 1; // 04:59 — стартовое отображение
-const TIMER_DANGER_THRESHOLD = 59; // 00:59 и менее — красный
-const TIMER_WARNING_SECONDS = 5; // 00:05 — проигрываем звук
+const TIMER_TOTAL_SECONDS = 5 * 60; // 05 сек — тестовое значение
+const TIMER_START_SECONDS = TIMER_TOTAL_SECONDS - 1;
+const TIMER_DANGER_THRESHOLD = 59;
+const TIMER_WARNING_SECONDS = 5;
 
 const SOUND_START = '/media/start.mp3';
 const SOUND_WARNING = '/media/5sec.mp3';
@@ -42,6 +43,7 @@ const formatTime = (totalSeconds: number): string => {
 
 export const TaskScreen: React.FC<TaskScreenProps> = ({
     task,
+    isLastTask = false,
     onRules,
     onClose,
     onStart,
@@ -62,7 +64,6 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
     const warningPlayedRef = useRef(false);
     const timesUpPlayedRef = useRef(false);
 
-    // Создаём Audio-объекты при монтировании, чистим при размонтировании
     useEffect(() => {
         startSoundRef.current = new Audio(SOUND_START);
         warningSoundRef.current = new Audio(SOUND_WARNING);
@@ -75,7 +76,6 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         };
     }, []);
 
-    // Очистка интервала при размонтировании
     useEffect(() => {
         return () => {
             if (intervalRef.current) {
@@ -84,7 +84,6 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         };
     }, []);
 
-    // Разблокировка кнопок по Shift после submit
     useEffect(() => {
         if (!isSubmitted || isUnlocked || isTimeUp) {
             return () => {};
@@ -269,7 +268,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         if (isSubmitted && isTimeUp) {
             return (
                 <Button className="button button--less-padding" onClick={() => handleResult(false)}>
-                    К следующей задаче
+                    {isLastTask ? 'К результатам' : 'К следующей задаче'}
                 </Button>
             );
         }

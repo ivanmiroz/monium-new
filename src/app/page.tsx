@@ -147,6 +147,7 @@ export default function Home() {
                             ...tasks[taskIndex],
                             title: `Задача ${taskIndex + 1}`,
                         }}
+                        isLastTask={taskIndex === tasks.length - 1}
                         onRules={() => {
                             setRulesFromTask(true);
                             setCurrentScreen('rules');

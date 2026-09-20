@@ -1,7 +1,9 @@
 'use client';
 
 import React from 'react';
-import {Button} from '@gravity-ui/uikit';
+import {Button, Icon} from '@gravity-ui/uikit';
+
+import ExIcon from '../../assets/icons/ex.svg';
 
 import './RulesScreen.scss';
 
@@ -34,9 +36,16 @@ export const RulesScreen: React.FC<RulesScreenProps> = ({showBack = false, onBac
             <div className="rules-screen__content">
                 <div className="rules-screen__body">
                     <div className="rules-screen__body-left">
-                        <h5 className="rules-screen__title">
-                            Вы — дежурный инженер клиники «Лапки»
-                        </h5>
+                        <p className="rules-screen__text-intro">
+                            Вам предстоит на время решить две задачи, примерив роль дежурного
+                            инженера клиники «Лапки». Перед началом посмотрите обзор
+                            observability-платформы Monium — и переходите к задачам.
+                        </p>
+
+                        <div className="rules-screen__hint">
+                            <Icon data={ExIcon} size={20} />
+                            <span className="rules-screen__hint-text">Важно</span>
+                        </div>
 
                         <div className="rules-screen__text">
                             <p className="rules-screen__text-item">
@@ -58,9 +67,7 @@ export const RulesScreen: React.FC<RulesScreenProps> = ({showBack = false, onBac
                             controls
                             playsInline
                         />
-                        <p className="rules-screen__video-caption">
-                            4. Будьте в наушниках на протяжении всего квиза
-                        </p>
+                        <p className="rules-screen__video-caption">4. Посмотрите обзор</p>
                     </div>
                 </div>
 
