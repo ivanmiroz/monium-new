@@ -17,7 +17,6 @@ export interface TaskData {
 
 interface TaskScreenProps {
     task: TaskData;
-    isLastTask?: boolean;
     onRules?: () => void;
     onClose?: () => void;
     onStart?: () => void;
@@ -25,10 +24,10 @@ interface TaskScreenProps {
     onComplete?: (isCorrect: boolean, time: string) => void;
 }
 
-const TIMER_TOTAL_SECONDS = 5 * 60; // 05 сек — тестовое значение
-const TIMER_START_SECONDS = TIMER_TOTAL_SECONDS - 1;
-const TIMER_DANGER_THRESHOLD = 59;
-const TIMER_WARNING_SECONDS = 5;
+const TIMER_TOTAL_SECONDS = 5 * 60; // 05:00 — общая длительность
+const TIMER_START_SECONDS = TIMER_TOTAL_SECONDS - 1; // 04:59 — стартовое отображение
+const TIMER_DANGER_THRESHOLD = 59; // 00:59 и менее — красный
+const TIMER_WARNING_SECONDS = 5; // 00:05 — проигрываем звук
 
 const SOUND_START = '/media/start.mp3';
 const SOUND_WARNING = '/media/5sec.mp3';
@@ -43,7 +42,6 @@ const formatTime = (totalSeconds: number): string => {
 
 export const TaskScreen: React.FC<TaskScreenProps> = ({
     task,
-    isLastTask = false,
     onRules,
     onClose,
     onStart,
@@ -54,9 +52,11 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isTimeUp, setIsTimeUp] = useState(false);
     const [secondsLeft, setSecondsLeft] = useState(TIMER_START_SECONDS);
+    const [penaltySeconds, setPenaltySeconds] = useState(0);
     const [isUnlocked, setIsUnlocked] = useState(false);
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const penaltyIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const startSoundRef = useRef<HTMLAudioElement | null>(null);
     const warningSoundRef = useRef<HTMLAudioElement | null>(null);
@@ -64,6 +64,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
     const warningPlayedRef = useRef(false);
     const timesUpPlayedRef = useRef(false);
 
+    // Создаём Audio-объекты при монтировании, чистим при размонтировании
     useEffect(() => {
         startSoundRef.current = new Audio(SOUND_START);
         warningSoundRef.current = new Audio(SOUND_WARNING);
@@ -76,16 +77,21 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         };
     }, []);
 
+    // Очистка интервалов при размонтировании
     useEffect(() => {
         return () => {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
             }
+            if (penaltyIntervalRef.current) {
+                clearInterval(penaltyIntervalRef.current);
+            }
         };
     }, []);
 
+    // Разблокировка кнопок по Shift после submit
     useEffect(() => {
-        if (!isSubmitted || isUnlocked || isTimeUp) {
+        if (!isSubmitted || isUnlocked) {
             return () => {};
         }
 
@@ -100,7 +106,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isSubmitted, isUnlocked, isTimeUp]);
+    }, [isSubmitted, isUnlocked]);
 
     const stopTimer = () => {
         if (intervalRef.current) {
@@ -110,8 +116,25 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         setIsTimerRunning(false);
     };
 
+    const stopPenaltyTimer = () => {
+        if (penaltyIntervalRef.current) {
+            clearInterval(penaltyIntervalRef.current);
+            penaltyIntervalRef.current = null;
+        }
+    };
+
+    const startPenaltyTimer = () => {
+        stopPenaltyTimer();
+        setPenaltySeconds(0);
+        penaltyIntervalRef.current = setInterval(() => {
+            setPenaltySeconds((prev) => prev + 1);
+        }, 1000);
+    };
+
+    // Основное время + штраф — это уходит в результаты
     const getElapsedTime = (): string => {
-        return formatTime(TIMER_TOTAL_SECONDS - secondsLeft);
+        const base = TIMER_TOTAL_SECONDS - secondsLeft;
+        return formatTime(base + penaltySeconds);
     };
 
     const handleStart = () => {
@@ -148,6 +171,8 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                         timesUpSoundRef.current?.play().catch(() => {});
                     }
 
+                    startPenaltyTimer();
+
                     return 0;
                 }
 
@@ -164,6 +189,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
     };
 
     const handleResult = (isCorrect: boolean) => {
+        stopPenaltyTimer();
         onComplete?.(isCorrect, getElapsedTime());
     };
 
@@ -178,14 +204,14 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         if (isSubmitted && isTimeUp) {
             return (
                 <>
-                    <h5 className="task-screen__title">Время вышло</h5>
+                    <h5 className="task-screen__title">Отличная работа</h5>
                     <p className="task-screen__text task-screen__text--submitted">
-                        Переходите к следующей задаче и постарайтесь найти
-                        <br /> решение за отведённое время
+                        Поднимите руку — стендист проверит правильность решения
                     </p>
 
-                    <div className="task-screen__timer task-screen__timer--danger">
-                        {formatTime(0)}
+                    <div className="task-screen__timer-row">
+                        <div className="task-screen__timer">{formatTime(0)}</div>
+                        <div className="task-screen__penalty">+ {formatTime(penaltySeconds)}</div>
                     </div>
                 </>
             );
@@ -256,9 +282,8 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                     </div>
                 ) : (
                     <p className="task-screen__note">
-                        Когда ознакомитесь с задачей,
-                        <br />
-                        нажмите «Начать задачу» — запустится таймер.
+                        Когда ознакомитесь с задачей, нажмите «Начать
+                        <br /> задачу» — запустится таймер.
                     </p>
                 )}
             </>
@@ -266,14 +291,6 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
     };
 
     const renderFooter = () => {
-        if (isSubmitted && isTimeUp) {
-            return (
-                <Button className="button button--less-padding" onClick={() => handleResult(false)}>
-                    {isLastTask ? 'К результатам' : 'К следующей задаче'}
-                </Button>
-            );
-        }
-
         if (isSubmitted) {
             return (
                 <>
