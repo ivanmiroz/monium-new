@@ -55,7 +55,8 @@ export const RulesScreen: React.FC<RulesScreenProps> = ({showBack = false, onBac
                                 2. Не закрывайте эту вкладку — здесь таймер
                             </p>
                             <p className="rules-screen__text-item">
-                                3. Будьте в наушниках на протяжении всего квиза
+                                3. Не снимайте наушники, чтобы не пропустить звуковой сигнал
+                                окончания времени
                             </p>
                         </div>
                     </div>
