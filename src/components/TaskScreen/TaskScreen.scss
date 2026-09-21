@@ -28,12 +28,6 @@
         text-align: center;
     }
 
-    &__description {
-        font-size: var(--g-text-size-base);
-        line-height: 1.5;
-        margin: 15px 0 0;
-    }
-
     &__content {
         display: flex;
         flex: 1;
@@ -145,7 +139,6 @@
         margin: auto 0 0;
         padding-top: 48px;
 
-        /* когда таймер внутри строки со штрафом — свой padding у него не нужен */
         .task-screen__timer {
             margin: 0;
             padding-top: 0;

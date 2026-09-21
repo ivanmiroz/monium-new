@@ -131,7 +131,6 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
         }, 1000);
     };
 
-    // Основное время + штраф — это уходит в результаты
     const getElapsedTime = (): string => {
         const base = TIMER_TOTAL_SECONDS - secondsLeft;
         return formatTime(base + penaltySeconds);
@@ -238,8 +237,6 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
 
         return (
             <>
-                <h5 className="task-screen__title">{task.title}</h5>
-
                 <h6 className="task-screen__subtitle">Ситуация</h6>
                 <p className="task-screen__text">{task.situation}</p>
 
@@ -344,11 +341,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                 </div>
 
                 <div className="task-screen__title-block">
-                    <h4 className="screen-title">Root Cause Challenge</h4>
-                    <p className="task-screen__description">
-                        Найдите причину инцидента за 5 минут с помощью
-                        <br /> observability-платформы Yandex Monium
-                    </p>
+                    <h4 className="screen-title">{task.title}</h4>
                 </div>
 
                 <div className="task-screen__header-right">
