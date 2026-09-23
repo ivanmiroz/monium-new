@@ -1,18 +1,18 @@
-import Task1 from '../assets/icons/tasks/1.svg';
-import Task2 from '../assets/icons/tasks/2.svg';
-import Task3 from '../assets/icons/tasks/3.svg';
-import Task4 from '../assets/icons/tasks/4.svg';
-import Task5 from '../assets/icons/tasks/5.svg';
-import Task6 from '../assets/icons/tasks/6.svg';
-import Task7 from '../assets/icons/tasks/7.svg';
-import Task8 from '../assets/icons/tasks/8.svg';
-import Task9 from '../assets/icons/tasks/9.svg';
-import Task10 from '../assets/icons/tasks/10.svg';
-import Task11 from '../assets/icons/tasks/11.svg';
-import Task12 from '../assets/icons/tasks/12.svg';
-import Task13 from '../assets/icons/tasks/13.svg';
-import Task14 from '../assets/icons/tasks/14.svg';
-import Task15 from '../assets/icons/tasks/15.svg';
+import Task1 from '../assets/icons/tasks/task1.png';
+import Task2 from '../assets/icons/tasks/task2.png';
+import Task3 from '../assets/icons/tasks/task3.png';
+import Task4 from '../assets/icons/tasks/task4.png';
+import Task5 from '../assets/icons/tasks/task5.png';
+import Task6 from '../assets/icons/tasks/task6.png';
+import Task7 from '../assets/icons/tasks/task7.png';
+import Task8 from '../assets/icons/tasks/task8.png';
+import Task9 from '../assets/icons/tasks/task9.png';
+import Task10 from '../assets/icons/tasks/task10.png';
+import Task11 from '../assets/icons/tasks/task11.jpg';
+import Task12 from '../assets/icons/tasks/task12.jpg';
+import Task13 from '../assets/icons/tasks/task13.jpg';
+import Task14 from '../assets/icons/tasks/task14.jpg';
+import Task15 from '../assets/icons/tasks/task15.jpg';
 
 import type {TaskData} from '../components/TaskScreen';
 
@@ -105,7 +105,7 @@ export const ALL_TASKS: TaskData[] = [
         title: 'Задача 13',
         situation:
             'По ночам еноты пытаются взломать умный шкаф с премиальным кормом. Шкаф шлёт метрики неудачных попыток авторизации — если не остановить банду, клиника обанкротится на корме.',
-        task: 'Создайте правило эскалации для алерта двери шкафа: звонок сторожу Михалычу (+7 (993) 474-2014), чтобы прогнать енотов. Телефон должен зазвонить.',
+        task: 'Создайте правило эскалации для алерта двери шкафа: звонок сторожу Михалычу (+7 999 111-22-33), чтобы прогнать енотов. Телефон должен зазвонить.',
         image: Task13,
     },
     {

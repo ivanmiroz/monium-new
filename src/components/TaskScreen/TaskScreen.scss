@@ -51,7 +51,7 @@
         flex-direction: column;
         flex-shrink: 0;
         min-width: 0;
-        padding: 64px 0 56px 80px;
+        padding: 40px 0 56px 80px;
         width: 691px;
     }
 
@@ -61,7 +61,10 @@
         flex-shrink: 0;
         justify-content: flex-end;
         margin-left: auto;
-        padding: 26px 0;
+    }
+
+    &__image {
+        height: 100%;
     }
 
     &__title {
@@ -74,14 +77,14 @@
 
     &__subtitle {
         font-family: var(--font-ys-display), sans-serif;
-        font-size: 24px;
+        font-size: 28px;
         font-weight: 800;
         line-height: 1.1;
         margin: 24px 0 0;
     }
 
     &__text {
-        font-size: 18px;
+        font-size: 22px;
         line-height: 1.5;
         margin: 10px 0 0;
     }
@@ -171,7 +174,7 @@
 
     &__note {
         color: rgba(0, 0, 0, 0.6);
-        font-size: 18px;
+        font-size: 22px;
         line-height: 1.5;
         margin: auto 0 0;
     }

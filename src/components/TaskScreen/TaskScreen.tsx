@@ -2,6 +2,7 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 import {Button, Icon} from '@gravity-ui/uikit';
+import type {StaticImageData} from 'next/image';
 
 import ExIcon from '../../assets/icons/ex.svg';
 import CloseIcon from '../../assets/icons/x.svg';
@@ -12,7 +13,7 @@ export interface TaskData {
     title: string;
     situation: string;
     task: string;
-    image: React.FC;
+    image: StaticImageData;
 }
 
 interface TaskScreenProps {
@@ -197,7 +198,6 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
     };
 
     const isTimerDanger = secondsLeft <= TIMER_DANGER_THRESHOLD;
-    const TaskImage = task.image;
 
     const renderBody = () => {
         if (isSubmitted && isTimeUp) {
@@ -361,7 +361,7 @@ export const TaskScreen: React.FC<TaskScreenProps> = ({
                     <div className="task-screen__body-left">{renderBody()}</div>
 
                     <div className="task-screen__body-right">
-                        <TaskImage />
+                        <img src={task.image.src} alt="" className="task-screen__image" />
                     </div>
                 </div>
 
