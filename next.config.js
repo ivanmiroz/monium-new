@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const repoName = 'имя-вашего-репозитория'; // ← поменяйте
+const repoName = 'monium-new'; // ← поменяйте
 
 const nextConfig = {
     output: 'export', // статический экспорт в папку out/
